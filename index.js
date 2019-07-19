@@ -16,64 +16,61 @@ let logo = {
 	image: 'img/dp.png',
 	fit: [100, 100],
 	alignment: 'right',
-	margin: [0, 25, 15, 0]
+	margin: [20, 30, 15, 0]
 }
 
-const headerInfo = (init, valid, to) => {
+const headerTitle = (text) => {
 	return {
 		text: [
-			`ADVERTISING CAMPAIGN COMMERCIAL OFFER \n
-			Offer generated on ${init}, offer valid it ${valid} \n
-			From: VĮ Lietuvos oro uostai \n
-			To: ${to}`
+			text
 		],
-		style: 'headerText'
+		style: 'headerTitle'
 	}
 }
+
+const headerInfo = (init, valid, to) => ({
+	text: [
+		`Offer generated on `, {
+			text: init,
+			bold: true
+		}, `, offer valid it `, {
+			text: valid,
+			bold: true
+		}, ` \n
+		`, {
+			text: 'From: ',
+			bold: true,
+			fontSize: 12,
+			margin: [100, 0, 0, 0]
+		}, `VĮ Lietuvos oro uostai \n`, {
+			text: 'To: ',
+			bold: true,
+			fontSize: 12
+		}, `${to}`,
+	],
+	style: 'headerText'
+})
 
 const headerGreeting = (receiver, period) => {
 	return {
 		alignment: 'justify',
 		columns: [{
-			width: 400,
-			text: [`\tHello,\n
-			This is automatically generated offer for advertising campaign for Vilnius, ${receiver}
-				airports during period ${period}.`],
+			width: 500,
+			text: [`\tHello,\n\nThis is automatically generated offer for advertising campaign for`, {
+				text: 'Vilnius',
+				bold: true
+			}, `, `, {
+				text: receiver,
+				bold: true
+			},` airports during period `, {
+				text: period,
+				bold: true
+			},`.`],
 			margin: [0, 25, 20, 30]
 		}],
 		style: 'subHeader'
 	}
 }
-
-const tableHeader = [{
-		text: 'Advertising Placement number.',
-		style: 'tableHeader'
-	},
-	{
-		text: 'Size',
-		style: 'tableHeader'
-	},
-	{
-		text: 'Impresions / display time',
-		style: 'tableHeader'
-	},
-	{
-		text: 'Advertising placement location',
-		style: 'tableHeader'
-	},
-	{
-		text: 'Price for one month excl. VA',
-		style: 'tableHeader'
-	},
-	{
-		text: 'Period',
-		style: 'tableHeader'
-	},
-	{
-		text: 'Price for whole period excl. VAT',
-		style: 'tableHeader'
-	}
-];
 
 const tableFooter = sum => {
 	const pvm = sum * 0.21;
@@ -119,37 +116,17 @@ const footer = {
 	],
 	margin: [40, -35]
 }
-
-function tableContent(data) {
-	let rows = [];
-	rows = rows.push([])
-	return rows;
-}
-
-const test = {
-	text: 'lalala',
-	image: 'img/morder.png',
-	fit: [86, 86],
-}
-
 var docDefinition = {
 	header: logo,
 	footer: footer,
 	content: [
+		headerTitle(`ADVERTISING CAMPAIGN COMMERCIAL OFFER`),
 		headerInfo('2018-10-24', '2018-12-24', 'UAB “Jūrmala”'),
 		headerGreeting('Vilnius, Kaunas and Palanga', '2019-01-01 to 2019-08-20'),
-		// {
-		// 	table: {
-		// 		widths: [70, 45, 75, 80, 57, 65, 55],
-		// 		body: [tableHeader]
-		// 	}
-		// },
 		{
 			table: {
-				// headerRows: 1,
 				dontBreakRows: true,
-				// keepWithHeaderRows: 1,
-				widths: [70, 45, 75, 80, 57, 65, 55],
+				widths: [80, 35, 75, 80, 57, 65, 55],
 				body: [
 					[{
 							text: 'Advertising Placement number.',
@@ -182,7 +159,7 @@ var docDefinition = {
 					],
 					[
 						'Lightbox V',
-						'3x1,5m',
+						'1920x1080',
 						'24/7',
 						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
 							{
@@ -278,12 +255,12 @@ var docDefinition = {
 						'3x1,5m',
 						'24/7',
 						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-						{
+							{
 
-							image: 'img/morder.png',
-							fit: [86, 86],
-						}
-					],
+								image: 'img/morder.png',
+								fit: [86, 86],
+							}
+						],
 						'150',
 						'2018.10.15-2019.11.16',
 						'150'
@@ -383,12 +360,12 @@ var docDefinition = {
 						'3x1,5m',
 						'24/7',
 						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-						{
+							{
 
-							image: 'img/morder.png',
-							fit: [86, 86],
-						}
-					],
+								image: 'img/morder.png',
+								fit: [86, 86],
+							}
+						],
 						'150',
 						'2018.10.15-2019.11.16',
 						'150'
@@ -449,12 +426,12 @@ var docDefinition = {
 						'3x1,5m',
 						'24/7',
 						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-						{
+							{
 
-							image: 'img/morder.png',
-							fit: [86, 86],
-						}
-					],
+								image: 'img/morder.png',
+								fit: [86, 86],
+							}
+						],
 						'150',
 						'2018.10.15-2019.11.16',
 						'150'
@@ -464,12 +441,12 @@ var docDefinition = {
 						'3x1,5m',
 						'24/7',
 						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-						{
+							{
 
-							image: 'img/morder.png',
-							fit: [86, 86],
-						}
-					],
+								image: 'img/morder.png',
+								fit: [86, 86],
+							}
+						],
 						'150',
 						'2018.10.15-2019.11.16',
 						'150'
@@ -479,12 +456,12 @@ var docDefinition = {
 						'3x1,5m',
 						'24/7',
 						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-						{
+							{
 
-							image: 'img/morder.png',
-							fit: [86, 86],
-						}
-					],
+								image: 'img/morder.png',
+								fit: [86, 86],
+							}
+						],
 						'150',
 						'2018.10.15-2019.11.16',
 						'150'
@@ -494,12 +471,12 @@ var docDefinition = {
 						'3x1,5m',
 						'24/7',
 						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-						{
+							{
 
-							image: 'img/morder.png',
-							fit: [86, 86],
-						}
-					],
+								image: 'img/morder.png',
+								fit: [86, 86],
+							}
+						],
 						'150',
 						'2018.10.15-2019.11.16',
 						{
@@ -511,12 +488,12 @@ var docDefinition = {
 						'3x1,5m',
 						'24/7',
 						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-						{
+							{
 
-							image: 'img/morder.png',
-							fit: [86, 86],
-						}
-					],
+								image: 'img/morder.png',
+								fit: [86, 86],
+							}
+						],
 						'150',
 						'2018.10.15-2019.11.16',
 						'150'
@@ -592,19 +569,27 @@ var docDefinition = {
 			margin: [306, 0, 0, 0]
 		}
 	],
-	pageMargins: [40, 60, 40, 35],
+	pageMargins: [40, 80, 40, 35],
 	pageBreakBefore: function (currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
 		return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
 	},
 	styles: {
 		headerText: {
-			fontSize: 14,
+			fontSize: 10,
 			light: true,
 		},
 		tableHeader: {
 			bold: true,
-			fontSize: 13,
+			fontSize: 10,
 			color: 'black'
+		},
+		headerTitle: {
+			bold: true,
+			fontSize: 14,
+			margin: [0, 0, 0, 25]
+		},
+		boldStyle: {
+			bold: true,
 		}
 	}
 };
