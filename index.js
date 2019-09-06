@@ -10,586 +10,478 @@ var fonts = {
 		light: './fonts/Ubuntu-Light.ttf'
 	}
 };
+
 var printer = new PdfPrinter(fonts);
 
-let logo = {
-	image: 'img/dp.png',
-	fit: [100, 100],
-	alignment: 'right',
-	margin: [20, 30, 15, 0]
+const headerTitle = {
+	columns: [{
+			text: 'Advertising Campaign \nCommertical Offer',
+			style: 'headerTitle'
+		},
+		{
+			image: 'img/PADS4.Logo.png',
+			alignment: 'right',
+			margin: [0, 30, 30, 0]
+		}
+	]
 }
 
-const headerTitle = (text) => {
-	return {
-		text: [
-			text
-		],
-		style: 'headerTitle'
-	}
-}
-
-const headerInfo = (init, valid, to) => ({
-	text: [
-		`Offer generated on `, {
-			text: init,
-			bold: true
-		}, `, offer valid it `, {
-			text: valid,
-			bold: true
-		}, ` \n
-		`, {
-			text: 'From: ',
-			bold: true,
-			fontSize: 12,
-			margin: [100, 0, 0, 0]
-		}, `VĮ Lietuvos oro uostai \n`, {
-			text: 'To: ',
-			bold: true,
-			fontSize: 12
-		}, `${to}`,
-	],
-	style: 'headerText'
+const borderStyle = ({
+	hLineColor: '#DEDEDE',
+	vLineColor: '#DEDEDE',
+	vLineWidth: (i, node) => (i === 0 || i === node.table.body.length) ? 0.5 : 1
 })
 
-const headerGreeting = (receiver, period) => {
-	return {
-		alignment: 'justify',
-		columns: [{
-			width: 500,
-			text: [`\tHello,\n\nThis is automatically generated offer for advertising campaign for`, {
-				text: 'Vilnius',
-				bold: true
-			}, `, `, {
-				text: receiver,
-				bold: true
-			},` airports during period `, {
-				text: period,
-				bold: true
-			},`.`],
-			margin: [0, 25, 20, 30]
-		}],
-		style: 'subHeader'
-	}
+const campExample = {
+	type: 'LightBox',
+	id: '#DF341Jd',
+	resolution: '1920*1080',
+	description: {
+		text: `The sreen at the airport outside the Schengen
+		area, at the A8 gate, is seen more than 5 000
+		passengers per month.`,
+		img: 'img/morder.jpg'
+	},
+	price: '€ 0.05',
+	name: 'Loren ipsum',
+	percent: `1.2
+	0.8
+	1.2
+	0.8
+	0.8`,
+	wholePrice: '€ 999'
 }
 
-const tableFooter = sum => {
-	const pvm = sum * 0.21;
-	const sumPvm = pvm + sum;
-	const output = [
-		[{
-				text: 'Addition coef:',
-				style: 'tableHeader'
-			},
-			'5%'
-		],
-		[{
-				text: 'Suma (be PVM):',
-				style: 'tableHeader'
-			},
-			`${sum}`
-		],
-		[{
-				text: 'PVM (21%):',
-				style: 'tableHeader'
-			},
-			`${pvm}`
-		],
-		[{
-				text: 'Suma su PVM:',
-				style: 'tableHeader'
-			},
-			`${sumPvm}`
-		],
-	];
-	return output;
+const campExample_1 = {
+	type: 'Lighting',
+	id: '#KJGVSDBVd',
+	resolution: '720*1080',
+	description: {
+		text: `ThMinim dolor veniam amet consectetur aliquip culpa nostrud nisi id sit nostrud cupidatat. Esse fugiat enim veniam nisi. Laboris velit incididunt laboris laborum cupidatat quis et. In id Lorem est aliqua velit consequat laboris in ullamco. month.`,
+		img: 'img/flower.png'
+	},
+	price: '€ 0.105',
+	name: 'Lalaby videoplay',
+	percent: `1.2
+	0.8
+	5.1
+	1.6
+	0.8`,
+	wholePrice: '€ 9809'
 }
+
+const campExample_2 = {
+	type: 'VideoBoard',
+	id: '#YE34BBR',
+	resolution: '1920*720',
+	description: {
+		text: `Cil occaecat in. Cid ullamco enim velit. Aute magna laborum laborum laboris sit nostrud officia enim deserunt do ipsum magna. Elit cupidatat sint cupidatat ipsum amet in cillum est esse et ea qui.`,
+		img: 'img/dev.jpeg'
+	},
+	price: '€ 3.2',
+	name: 'Adver leptops',
+	percent: `0.2
+	2.35
+	7.23
+	2.67
+	1.5`,
+	wholePrice: '€ 449'
+}
+
+const headerTitle_1 = text => ({
+	text,
+	style: 'campaignListHeader'
+})
+
+const accentColorFooter = (titleText, text) => (
+	[{
+			text: titleText + '\t',
+			style: 'smallAccentBold'
+		},
+		{
+			text: text + '\n\n',
+			style: 'small'
+		}
+	]
+)
+
+const headerTable = (header, content) => ({
+	style: 'headerTable',
+	table: {
+		widths: ['*', 25, '*', 25, '*'],
+		body: [
+			[{
+					text: header[0],
+					style: 'tableHeader',
+					border: [false, true, false, false]
+				},
+				{
+					text: ''
+				},
+				{
+					text: header[1],
+					style: 'tableHeader',
+					border: [false, true, false, false]
+				},
+				{
+					text: ''
+				},
+				{
+					text: header[2],
+					style: 'tableHeader',
+					border: [false, true, false, false]
+				},
+			],
+			[
+				content[0],
+				'',
+				content[1],
+				'',
+				content[2]
+			]
+		]
+	},
+	layout: {
+		hLineWidth: (i, node) => (i === 0 || i === node.table.body.length) ? 0.5 : 0,
+		hLineColor: (i, node) => (i === 0 || i === node.table.body.length) ? '#DEDEDE' : '',
+		paddingTop: () => 5,
+		defaultBorder: false
+	}
+});
+
+function contentTable(header, content) {
+	return ({
+		style: 'campaignListTable',
+		table: {
+			dontBreakRows: true,
+			widths: [320, '*', '*'],
+			body: [
+				[{
+						text: header[0],
+						style: 'campaignListTableHeader',
+					},
+					{
+						text: header[1],
+						style: 'campaignListTableHeader',
+					},
+					{
+						text: header[2],
+						style: 'campaignListTableHeader',
+					},
+				],
+				...content
+			]
+		},
+		layout: {
+			paddingTop: () => 13,
+			paddingRight: () => 10,
+			paddingBottom: () => 10,
+			paddingLeft: () => 10,
+			...borderStyle
+		}
+	})
+}
+const summaryTable = sum => ({
+	table: {
+		widths: [79, 77],
+		body: [
+			[{
+					text: 'TOTAL PRICE',
+					style: 'tableHeader'
+				},
+				{
+					text: `€ ${sum}`,
+					style: 'tableSummaryAmount'
+				}
+			]
+		]
+	},
+	layout: {
+		paddingTop: () => 15,
+		paddingBottom: () => 15,
+		...borderStyle
+	},
+	margin: [340, -1, 0, 0],
+	alignment: 'center',
+})
+
+const termsAndConditions = [{
+		text: 'TERMS & CONDITIONS',
+		style: 'tableSummaryHeader'
+	},
+	{
+		text: '\n\nAll prices are excluding VAT.\nOur general and PADS4 Software maintenance terms and conditions are applicable.',
+		style: 'tableSummaryText',
+		pageBreak: 'after'
+	},
+	{
+		text: 'Please do not hesitate to get in touch with our sales team at sales@pads4.com for explanation\n and/or campaign details.',
+		style: 'simpleText'
+	}
+];
+
 const footer = {
-	columns: [{
-			text: 'Valstybės įmonė\nRodūnios kelias 10A\n02189 Vilnius'
+	columns: [
+		[{
+			text: 'Loren ipsum  BV,',
+			style: 'smallAccentBold'
+		}, {
+			text: '\ntrading as LOREN',
+			style: 'smallAccent'
+		}],
+		{
+			text: 'Luchthavenweg 594\n\n5657 EA Eindhoven\n\nThe Netherlands',
+			style: 'small'
 		},
 		{
-			text: 'Tel. (8 5) 273 9326\nFaks. (8 5) 232 9122\nEl. p. info@ltou.lt\nwww.ltou.lt'
+			text: [
+				...accentColorFooter('Call', `+31 88 266 11 77`),
+				...accentColorFooter('Mail', `info@pads4.com`),
+				...accentColorFooter('Visit', `www.pads4.com`)
+			]
 		},
 		{
-			text: 'Duomenys kaupiami ir saugomi\nJuridinių asmenų registre\nKodas 120864074'
+			text: [
+				...accentColorFooter('CoC', `www.pads4.com`),
+				...accentColorFooter('VAT', `VAT NL8028.44.807.B.01`)
+			]
 		}
 	],
 	margin: [40, -35]
 }
-var docDefinition = {
-	header: logo,
-	footer: footer,
-	content: [
-		headerTitle(`ADVERTISING CAMPAIGN COMMERCIAL OFFER`),
-		headerInfo('2018-10-24', '2018-12-24', 'UAB “Jūrmala”'),
-		headerGreeting('Vilnius, Kaunas and Palanga', '2019-01-01 to 2019-08-20'),
+const campaignListTableHeader = text => ({
+	text,
+	style: 'campaignListTableHeader'
+})
+const campTableText = text => ({
+	text,
+	style: 'campTableContent'
+})
+const campTableFooterText = (textTitle, result) => (
+	[{
+			text: textTitle,
+			style: 'campTableFooterText'
+		},
+		{
+			text: result,
+			style: 'campTableFooterText'
+		}
+	])
+
+const campaignTableRowItem = campaign => (
+	[
+		[{
+				text: 'TYPE:',
+				style: 'smallBoldCenter'
+			},
+			campTableText(campaign.type),
+			{
+				text: 'ID:',
+				style: 'smallBoldCenter'
+			},
+			campTableText(campaign.id),
+			{
+				text: 'RESOLUTION:',
+				style: 'smallBoldCenter'
+			},
+			campTableText(campaign.resolution),
+		],
+		[
+			campTableText(campaign.description.text),
+			{
+				image: campaign.description.img,
+				fit: [140, 60],
+				alignment: 'center'
+			}
+		],
+		campTableText(campaign.price),
+		campTableText(campaign.name),
+		campTableText(campaign.percent),
+		campTableText(campaign.wholePrice)
+	]
+)
+
+const newCampaing = (name, dataTablesHead, dataCampaign) => {
+	let containerRows = [];
+	for (let i = 0; i < dataCampaign.length; i++) {
+		const item = dataCampaign[i];
+		containerRows.push(campaignTableRowItem(item));
+	}
+	return ([
+		headerTitle_1(name),
+		headerTable(['FROM:', 'TOTAL HITS:', 'HITS PER HOURS:'], dataTablesHead[0]),
+		headerTable(['TO:', 'CONTENT DURATION:', ''], dataTablesHead[1]),
 		{
 			table: {
 				dontBreakRows: true,
-				widths: [80, 35, 75, 80, 57, 65, 55],
+				widths: [60, 150, 60, 100, 35, 60],
 				body: [
-					[{
-							text: 'Advertising Placement number.',
-							style: 'tableHeader'
-						},
-						{
-							text: 'Size',
-							style: 'tableHeader'
-						},
-						{
-							text: 'Impresions / display time',
-							style: 'tableHeader'
-						},
-						{
-							text: 'Advertising placement location',
-							style: 'tableHeader'
-						},
-						{
-							text: 'Price for one month excl. VA',
-							style: 'tableHeader'
-						},
-						{
-							text: 'Period',
-							style: 'tableHeader'
-						},
-						{
-							text: 'Price for whole period excl. VAT',
-							style: 'tableHeader'
-						}
-					],
 					[
-						'Lightbox V',
-						'1920x1080',
-						'24/7',
-						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-							{
-
-								image: 'img/morder.png',
-								fit: [86, 86],
-							}
-						],
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
+						campaignListTableHeader('PLACEMENT\nINFO'),
+						campaignListTableHeader('PLACEMENT DESCRIPTION'),
+						campaignListTableHeader('PRICE\nPRE 10 SEC'),
+						campaignListTableHeader('NAME'),
+						campaignListTableHeader('%'),
+						campaignListTableHeader('PRICE FOR WHOLE\nPERIOD EXCL. VA')
 					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-							{
-
-								image: 'img/morder.png',
-								fit: [86, 86],
-							}
-						],
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-							{
-
-								image: 'img/morder.png',
-								fit: [86, 86],
-							}
-						],
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-							{
-
-								image: 'img/morder.png',
-								fit: [86, 86],
-							}
-						],
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-							{
-
-								image: 'img/morder.png',
-								fit: [86, 86],
-							}
-						],
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-							{
-
-								image: 'img/morder.png',
-								fit: [86, 86],
-							}
-						],
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-							{
-
-								image: 'img/morder.png',
-								fit: [86, 86],
-							}
-						],
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-							{
-
-								image: 'img/morder.png',
-								fit: [86, 86],
-							}
-						],
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-							{
-
-								image: 'img/morder.png',
-								fit: [86, 86],
-							}
-						],
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-							{
-
-								image: 'img/morder.png',
-								fit: [86, 86],
-							}
-						],
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-							{
-
-								image: 'img/morder.png',
-								fit: [86, 86],
-							}
-						],
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-							{
-
-								image: 'img/morder.png',
-								fit: [86, 86],
-							}
-						],
-						'150',
-						'2018.10.15-2019.11.16',
-						{
-							text: '150'
-						}
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						['Adipisicing aute dolore ipsum elit id excepteur et consectetur.',
-							{
-
-								image: 'img/morder.png',
-								fit: [86, 86],
-							}
-						],
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
-					[
-						'Lightbox V-LB-03-01',
-						'3x1,5m',
-						'24/7',
-						{
-							image: 'img/morder.png',
-							fit: [86, 86]
-						},
-						'150',
-						'2018.10.15-2019.11.16',
-						'150'
-					],
+					...containerRows
 				]
-			}
+			},
+			layout: {
+				paddingTop: () => 8,
+				paddingBottom: () => 8,
+				...borderStyle
+			},
+			margin: [0, 50, 0, 0]
 		},
 		{
 			table: {
-				widths: [130, 55],
-				body: tableFooter(1730)
+				widths: [145, 60],
+				body: [
+					campTableFooterText('Subtotal', '€ 4,364.00'),
+					campTableFooterText('Project Discount %', '12%'),
+					campTableFooterText('Project discount', '€ 364.00'),
+					[{
+							text: 'TOTAL PRICE',
+							style: 'tableHeader'
+						},
+						{
+							text: '€ 3,999.00',
+							style: 'tableSummaryAmount'
+						}
+					]
+				]
 			},
-			margin: [306, 0, 0, 0]
+			layout: {
+				...borderStyle
+			},
+			margin: [296, -1, 0, 0]
 		}
+	])
+}
+
+var docDefinition = {
+	header: headerTitle,
+	footer: footer,
+	content: [
+		headerTitle_1('Commertical Offer'),
+		headerTable(['CREATED BY', 'OFFER FOR', 'QUATATION REFERENCE'], ['Nataly', 'Coca-Cola Netherlands', '353-PADS4-00331-0']),
+		headerTable(['CAMPAIGN NAME', 'PROJECT DISCOUNT', 'PRICE PER CAMPAIGN'], ['10 SEP, 19', 'Christmas 2020 Coca-Cola\nAdvertising Campaign', '07 SEP, 19']),
+		headerTitle_1('Campaign List'),
+		contentTable(['CAMPAIGN NAME', 'PROJECT DISCOUNT', 'PRICE PER CAMPAIGN'], 
+		[
+			['Campaing 1', '3%', '€ 396.99'],
+			['Campaing 2', '5%', '€ 396.99'],
+			['Campaing 3', '10%', '€ 396.99']
+		]),
+		summaryTable(2079),
+		termsAndConditions,
+		headerTitle_1('Content Requirements'),
+		contentTable(['CAMPAIGN NAME', 'RESOLUTION', 'DURATION'], 
+		[
+			['Campaing 1', '1920*1080', '10 sec'],
+			['Campaing 1', '1920*720', '10 sec', ],
+			['Campaing 1', '1920*1080', 'N/A']
+		]),
+		{
+			text: 'The advertising material has to be provided in accordance with PADS4 technical standards. The\ndocument describing those standards is in attachment.',
+			style: 'summaryContent',
+			pageBreak: 'after'
+		},
+		newCampaing(
+			'Campaing 1', [
+				['10 SEP, 19', '10000', '60'],
+				['31 SEP, 19', '10 sec ', '']
+			],
+			[campExample_2,campExample,campExample, campExample_1, campExample_2]
+		)
 	],
 	pageMargins: [40, 80, 40, 35],
-	pageBreakBefore: function (currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
-		return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
-	},
+	pageBreakBefore: (currentNode, followingNodesOnPage) => (currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0),
 	styles: {
-		headerText: {
-			fontSize: 10,
-			light: true,
+		campaignListTableHeader: {
+			color: '#fff',
+			fillColor: '#373736',
+			bold: true,
+			fontSize: 7,
+			alignment: 'center'
+		},
+		small: {
+			fontSize: 7
+		},
+		smallAccent: {
+			fontSize: 7,
+			color: '#12A29A'
+		},
+		smallAccentBold: {
+			fontSize: 7,
+			bold: true,
+			color: '#12A29A'
+		},
+		smallBoldCenter: {
+			bold: true,
+			fontSize: 7,
+			alignment: 'center'
+		},
+		campTableContent: {
+			fontSize: 7,
+			margin: [0, 0, 0, 20],
+			alignment: 'center'
 		},
 		tableHeader: {
 			bold: true,
+			fontSize: 8,
+			color: 'black',
+			margin: [0, 3, 0, 0]
+		},
+		campaignListTable: {
+			fontSize: 8,
+			margin: [0, 3, 0, 0]
+		},
+		campTableFooterText: {
+			fontSize: 8,
+			margin: [0, 2, 10, 2],
+			alignment: 'right'
+		},
+		summaryContent: {
+			margin: [0, 50, 0, 0],
+			fontSize: 10
+		},
+		tableSummaryHeader: {
+			bold: true,
 			fontSize: 10,
-			color: 'black'
+			margin: [0, 100, 0, 0]
+		},
+		tableSummaryText: {
+			fontSize: 10,
+			color: '#373736'
+		},
+		simpleText: {
+			fontSize: 10,
+			color: '#373736',
+			margin: [0, 40, 0, 0]
+		},
+		headerTable: {
+			fontSize: 10,
+			margin: [0, 10, 0, 0]
+		},
+		tableSummaryAmount: {
+			bold: true,
+			fontSize: 12,
+			margin: [0, 12, 10, 12],
+			alignment: 'right'
 		},
 		headerTitle: {
 			bold: true,
-			fontSize: 14,
-			margin: [0, 0, 0, 25]
+			fontSize: 18,
+			margin: [40, 30, 0, 30],
+			color: '#3E3E3F'
 		},
-		boldStyle: {
-			bold: true,
+		campaignListHeader: {
+			margin: [0, 25, 0, 30],
+			fontSize: 24,
+			color: '#12A29A',
+			bold: true
 		}
 	}
 };
